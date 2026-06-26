@@ -1,0 +1,73 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Report {
+  id             String         @id @default(cuid())
+  clientId       String?
+  type           String
+  score          Int
+  summary        String         @db.Text
+  sections       Json
+  detailSections Json
+  imageQuality   String?
+  inputData      Json?
+  unlocked       Boolean        @default(false)
+  orders         PaymentOrder[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([clientId])
+  @@map("report")
+}
+
+model PaymentOrder {
+  id            String    @id @default(cuid())
+  orderNo       String    @unique(map: "PaymentOrder_orderNo_key")
+  reportId      String
+  report        Report    @relation(fields: [reportId], references: [id], map: "PaymentOrder_reportId_fkey")
+  amount        Decimal   @db.Decimal(10, 2)
+  payStatus     String
+  payChannel    String
+  alipayTradeNo String?
+  rawNotify     Json?
+  createdAt     DateTime  @default(now())
+  paidAt        DateTime?
+  updatedAt     DateTime  @updatedAt
+
+  @@index([reportId], map: "PaymentOrder_reportId_fkey")
+  @@map("paymentorder")
+}
+
+model AiLog {
+  id           String   @id @default(cuid())
+  moduleType   String
+  success      Boolean
+  errorMessage String?  @db.Text
+  createdAt    DateTime @default(now())
+
+  @@map("ailog")
+}
+
+model DailyFortune {
+  id          String   @id @default(cuid())
+  clientId    String?
+  score       Int
+  keyword     String
+  luckyColor  String?
+  suitable    Json
+  avoid       Json
+  quote       String   @db.Text
+  advice      String   @db.Text
+  fortuneDate String
+  createdAt   DateTime @default(now())
+
+  @@index([clientId])
+  @@index([fortuneDate])
+  @@map("dailyfortune")
+}
