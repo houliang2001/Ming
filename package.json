@@ -1,0 +1,21 @@
+{
+  "name": "lingxi-ge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/preview.mjs"
+  },
+  "dependencies": {
+    "@lucide/vue": "^1.17.0",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "element-plus": "^2.10.4",
+    "html-to-image": "^1.11.13",
+    "qrcode": "^1.5.4",
+    "vite": "^5.4.11",
+    "vue": "^3.5.13",
+    "vue-router": "^4.4.5"
+  }
+}

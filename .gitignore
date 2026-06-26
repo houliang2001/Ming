@@ -1,0 +1,14 @@
+.env
+.env.*
+!server/.env.example
+node_modules/
+dist/
+uploads/
+*.log
+*.zip
+server/node_modules/
+server/uploads/
+server/.env
+server/*.log
+public/payment-qr.*
+public/wechat-payment-qr.*
